@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  php-fpm:
+    build: .docker/php
+    container_name: "frauder-php"
+    entrypoint: .docker/entrypoint.sh
+    environment:
+      - COMPOSER_MEMORY_LIMIT=2G
+      - ENVIRONMENT=local
+    volumes:
+      - .:/var/www
+    networks:
+      - frauder-network
+    user: "1000:www-data"
+
+  nginx:
+    build: .docker/nginx
+    container_name: "frauder-nginx"
+    restart: always
+    tty: true
+    ports:
+      - "8481:80"
+    volumes:
+      - .:/var/www
+    networks:
+      - frauder-network
+    depends_on:
+      - php-fpm
+
+networks:
+  frauder-network:
+    driver: bridge
