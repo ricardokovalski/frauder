@@ -55,28 +55,7 @@ make composer-install
 ```
 make composer-dump
 ```
-### Rodar migrations no container php
-```
-make migrate
-```
-### Rodar seeders no container php
-```
-make seed
-```
-### Reseta e recria o banco no container php
-```
-make refresh-db
-```
-### Rodar suites de teste
-```
-make tests
-```
-### Gerar Relatórios de testes
-```
-make tests-resports
-```
 ### Para listar todos os comandos make disponíveis
 ```
 make help
 ```
-
