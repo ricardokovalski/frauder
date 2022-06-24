@@ -1,5 +1,6 @@
 .idea
-/datasets/*
-/results/*
+datasets/*.csv
+results/*.json
+results/*.csv
 /vendor
 index.php
