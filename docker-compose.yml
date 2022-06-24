@@ -12,7 +12,6 @@ services:
       - .:/var/www
     networks:
       - frauder-network
-    user: "1000:www-data"
 
   nginx:
     build: .docker/nginx

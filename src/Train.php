@@ -6,7 +6,6 @@ use Rubix\ML\Loggers\Screen;
 use Rubix\ML\Datasets\Labeled;
 use Rubix\ML\Extractors\CSV;
 use Rubix\ML\Transformers\NumericStringConverter;
-use Rubix\ML\Transformers\OneHotEncoder;
 use Rubix\ML\Transformers\ZScaleStandardizer;
 use Rubix\ML\Classifiers\LogisticRegression;
 use Rubix\ML\NeuralNet\Optimizers\StepDecay;
@@ -32,7 +31,6 @@ final class Train implements TrainInterface
 
         $dataset = Labeled::fromIterator(new CSV($this->dataset, true))
             ->apply(new NumericStringConverter())
-            ->apply(new OneHotEncoder())
             ->apply(new ZScaleStandardizer());
 
         [$training, $testing] = $dataset->stratifiedSplit(0.8);
