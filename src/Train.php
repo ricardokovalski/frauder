@@ -14,6 +14,8 @@ use Rubix\ML\CrossValidation\Reports\ConfusionMatrix;
 use Rubix\ML\CrossValidation\Reports\MulticlassBreakdown;
 use Rubix\ML\Persisters\Filesystem;
 
+use function Rubix\ML\array_transpose;
+
 final class Train implements TrainInterface
 {
     protected string $dataset;
@@ -35,13 +37,13 @@ final class Train implements TrainInterface
 
         [$training, $testing] = $dataset->stratifiedSplit(0.8);
 
-        $estimator = new LogisticRegression(128, new StepDecay(0.01, 100));
+        $estimator = new LogisticRegression(256, new StepDecay(0.01, 100));
 
         $estimator->setLogger($logger);
 
         $estimator->train($training);
 
-        $extractor = new CSV('progress.csv', true);
+        $extractor = new CSV('results/progress.csv', true);
 
         $extractor->export($estimator->steps());
 
@@ -58,9 +60,9 @@ final class Train implements TrainInterface
 
         $results = $report->generate($predictions, $testing->labels());
 
-        //echo $results;
+        echo $results;
 
-        $results->toJSON()->saveTo(new Filesystem('report.json'));
+        $results->toJSON()->saveTo(new Filesystem('results/report.json'));
 
         $logger->info('Report saved to report.json');
     }

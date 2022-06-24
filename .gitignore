@@ -1,4 +1,5 @@
 .idea
 /datasets/*
+/results/*
 /vendor
 index.php
