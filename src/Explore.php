@@ -7,7 +7,6 @@ use Rubix\ML\Datasets\Labeled;
 use Rubix\ML\Extractors\CSV;
 use Rubix\ML\Transformers\NumericStringConverter;
 use Rubix\ML\Persisters\Filesystem;
-use Rubix\ML\Transformers\OneHotEncoder;
 use Rubix\ML\Transformers\ZScaleStandardizer;
 use Rubix\ML\Transformers\TSNE;
 
@@ -31,9 +30,9 @@ final class Explore implements ExploreInterface
 
         $stats = $dataset->describe();
 
-        //echo $stats;
+        echo $stats;
 
-        $stats->toJSON()->saveTo(new Filesystem('stats.json'));
+        $stats->toJSON()->saveTo(new Filesystem('results/stats.json'));
 
         $logger->info('Stats saved to stats.json');
 
@@ -43,10 +42,9 @@ final class Explore implements ExploreInterface
 
         $embedder->setLogger($logger);
 
-        $dataset->apply(new OneHotEncoder())
-            ->apply(new ZScaleStandardizer())
+        $dataset->apply(new ZScaleStandardizer())
             ->apply($embedder)
-            ->exportTo(new CSV('embedding.csv'));
+            ->exportTo(new CSV('results/embedding.csv'));
 
         $logger->info('Embedding saved to embedding.csv');
     }
